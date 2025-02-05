@@ -1,32 +1,57 @@
-// DOM Manipulation
-// How do we find the elements in HTML that we need to change, and how can we change them?
+const headerText="This is the Header";
 
-// Objective: change the text content of welcome-heading using JavaScript
-// first challenge: find the element
+console.log("ready");
 
-// "query" the element; create a variable and store data about that element in it
-// using the DOCUMENT OBJECT MODEL
-// which is basically a JavaScript "image" of the page
-// "document" refers to the web page itself
+function populateHeader(inputText) {
+    // first: find the element that we are going to be changing
+    const hOneNode = document.querySelector("h1");
 
-// store an object in a variable representing an element on the page
-const welcomeHeadingEle = document.querySelector("#welcome-heading");
-// cf document.getElementById("welcome-heading");
-
-// this object has many properties that can be manipulated
-// when the DOM sees that a property of an element has changed, it updates the html document
-welcomeHeadingEle.textContent = "This has been manipulated via JavaScript";
-welcomeHeadingEle.className = "highlight";
-
-// we can create elements as well
-const newParagraph = document.createElement("p");
-newParagraph.textContent = "This new paragraph added after the page was loaded";
-document.body.appendChild(newParagraph);
-
-// modify all elements with "p" tags
-const allParagraphEles = document.querySelectorAll("p");
-// console.log(allParagraphEles);
-// like python, iterating over a list of elements
-for(let p of allParagraphEles) {
-    p.classList.add("new-paragraph-style");
+    hOneNode.textContent = inputText;
 }
+
+function countToFiveThenDoSomething(callback) {
+    for(let i = 1; i <=5; i++) {
+        console.log(i);
+    }
+
+    callback();
+}
+
+function sayHello(){
+    console.log("Hello!");
+}
+
+function sayGoodbye(){
+    console.log("Goodbye!");
+}
+
+// providing different functions to be used as callback
+// countToFiveThenDoSomething(sayHello);
+// countToFiveThenDoSomething(sayGoodbye);
+
+// // inline function (just used as the callback)
+// countToFiveThenDoSomething(() => {
+//     console.log("This is an anonymous inline function");
+// });
+
+// run populateHeader WHEN the page loads
+// addEventListener adds an event listener to whatever element it is invoked on
+// "DOMContentLoaded": the event we are waiting for to occur 
+// the function that is provided as the last argument is always given the EVENT ITSELF
+// as an object for its first argument
+// console.log("potato")
+
+//functions given as arguments for other functions are "callbacks"
+document.addEventListener("DOMContentLoaded", () => {
+    populateHeader(headerText);
+    
+    // Step 1: Find the button
+    const buttonNode = document.querySelector("#log-something");
+
+    // Step 2: Add a "click" event listener on the button
+    // We'll add an anonymous callback to the event listener, since this will be unique behaviour that 
+    // we don't need to re-use accross elements
+    buttonNode.addEventListener("click", () => {
+        console.log("Event Happened");
+    });
+});
